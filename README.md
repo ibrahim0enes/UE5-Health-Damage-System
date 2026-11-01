@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/banner.svg" alt="Damage System – reusable health and damage for Unreal Engine 5" width="100%">
+  <img src="docs/banner.svg" alt="UE5 Health & Damage System – reusable health and damage in C++" width="100%">
 </p>
 
 <p align="center">
@@ -8,9 +8,9 @@
   <a href="https://qpayk.itch.io">itch.io</a>
 </p>
 
-# DamageSystemTemplate
+# UE5 Health & Damage System (C++)
 
-A small health and damage module for Unreal Engine 5, written in C++ with Blueprint extension points.
+A small health and damage module for Unreal Engine 5, written in C++ with Blueprint extension points. The Unreal project inside is called `DamageSystemTemplate`.
 
 I built it as a learning project to understand how a damage system can be structured in UE5: an interface, a reusable component, and events that other systems can react to. It handles health, healing, blocking, invincibility and death. It does **not** include attacks, weapons or hit detection (see [Not included](#not-included)).
 
@@ -166,3 +166,11 @@ Config/     project settings
 Content/    Unreal assets (based on the Third Person template and its animation packs)
 Source/     C++ code
 ```
+
+## My other UE5 repos
+
+| Repo | What it is |
+|---|---|
+| [UE5-Boxer-Enemy-AI](https://github.com/ibrahim0enes/UE5-Boxer-Enemy-AI) | Boxer enemy that chases, punches and reacts, built in Blueprints without a Behavior Tree |
+| [UE5-Health-Damage-System](https://github.com/ibrahim0enes/UE5-Health-Damage-System) | Reusable health and damage component in C++ (interface, delegates, Blueprint hooks) |
+| [UE5-Medieval-Combat-System](https://github.com/ibrahim0enes/UE5-Medieval-Combat-System) | Player-side medieval combat: lock-on, fists and sword, directional hit reactions |
