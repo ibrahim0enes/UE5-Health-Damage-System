@@ -1,3 +1,13 @@
+<p align="center">
+  <img src="docs/banner.svg" alt="Damage System – reusable health and damage for Unreal Engine 5" width="100%">
+</p>
+
+<p align="center">
+  <a href="https://www.ibrahimenescolak.com"><b>Portfolio</b></a> ·
+  <a href="https://www.linkedin.com/in/ibrahim-enes-%C3%A7olak">LinkedIn</a> ·
+  <a href="https://qpayk.itch.io">itch.io</a>
+</p>
+
 # DamageSystemTemplate
 
 A small health and damage module for Unreal Engine 5, written in C++ with Blueprint extension points.
@@ -15,6 +25,56 @@ All C++ lives in `Source/DamageSystemTemplate/DamageSystem/`.
 | `DamageSystemComponent` | `UActorComponent` that holds health and processes damage and healing |
 | `DamageableCharacterBase` | `ACharacter` that implements `IDamageable`, owns a `DamageSystemComponent` and exposes overridable response events |
 
+### How the classes fit together
+
+```mermaid
+classDiagram
+    direction LR
+    class IDamageable {
+        <<interface>>
+        GetCurrentHealth() float
+        GetMaxHealth() float
+        GetIsDead() bool
+        Heal(HealAmount, Healer)
+        ReceiveDamage(FDamageInfo) bool
+    }
+    class UDamageSystemComponent {
+        <<ActorComponent>>
+        MaxHealth
+        -CurrentHealth
+        -IsDead / IsBlocking / IsInvincible
+        HandleIncomingDamage(FDamageInfo) bool
+        HandleIncomingHeal(HealAmount, Healer)
+        OnDamageTaken
+        OnDamageAvoided
+        OnHealReceived
+        OnDeath
+    }
+    class ADamageableCharacterBase {
+        <<ACharacter>>
+        RespondToDamageTaken()
+        RespondToDamageAvoided()
+        RespondToHealReceived()
+        RespondToDeath()
+    }
+    class FDamageInfo {
+        <<struct>>
+        DamageAmount
+        DamageCauser
+        DamageType / DamageResponse
+        CanBeBlocked / CanBeParried
+        ShouldDamageInvincible / ShouldForceInterrupt
+    }
+    class BP_Child {
+        <<Blueprint>>
+        overrides Respond To ... events
+    }
+    IDamageable <|.. ADamageableCharacterBase : implements
+    ADamageableCharacterBase *-- UDamageSystemComponent : owns
+    ADamageableCharacterBase <|-- BP_Child : extends
+    UDamageSystemComponent ..> FDamageInfo : reads
+```
+
 ## How it works
 
 `UDamageSystemComponent::HandleIncomingDamage` does this:
@@ -23,6 +83,21 @@ All C++ lives in `Source/DamageSystemTemplate/DamageSystem/`.
 2. If the owner is invincible (and the damage doesn't have `ShouldDamageInvincible`), or is blocking (and the damage has `CanBeBlocked`), `OnDamageAvoided` fires and no health is lost.
 3. Otherwise health is reduced (clamped between 0 and `MaxHealth`) and `OnDamageTaken` fires.
 4. At 0 health the owner is marked dead and `OnDeath` fires. Further damage and healing are ignored.
+
+```mermaid
+flowchart TD
+    A([ReceiveDamage FDamageInfo]) --> B{Owner already dead?}
+    B -- yes --> X[Ignore, return false]
+    B -- no --> C{Invincible and not ShouldDamageInvincible,<br/>or blocking and CanBeBlocked?}
+    C -- yes --> D[OnDamageAvoided<br/>return false]
+    C -- no --> E[Health -= DamageAmount<br/>clamped to 0..MaxHealth]
+    E --> F[OnDamageTaken]
+    F --> G{Health is 0?}
+    G -- no --> R[return true]
+    G -- yes --> H[IsDead = true<br/>OnDeath]
+    H --> I[RespondToDeath: stop movement,<br/>disable input or AI logic,<br/>ragdoll the mesh]
+    I --> R
+```
 
 Healing works the same way: it is clamped to `MaxHealth`, fires `OnHealReceived`, and is ignored if the owner is dead.
 
@@ -82,7 +157,7 @@ if (TargetActor && TargetActor->Implements<UDamageable>())
 1. Install [Git LFS](https://git-lfs.com/) before cloning, because the project's binary assets are stored with it.
 2. Clone the repository.
 3. Right-click `DamageSystemTemplate.uproject` and generate the Visual Studio project files.
-4. Build and open the project in Unreal Engine 5.
+4. Build and open the project in Unreal Engine 5.8.
 
 ## Project structure
 
