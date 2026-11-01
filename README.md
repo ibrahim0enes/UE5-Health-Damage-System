@@ -1,10 +1,16 @@
 <p align="center">
-  <img src="docs/banner.svg" alt="UE5 Health & Damage System – reusable health and damage in C++" width="100%">
+  <img src="docs/banner.png" alt="UE5 Health &amp; Damage System – reusable health and damage in C++" width="100%">
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Unreal_Engine-5.8-3FB950?style=for-the-badge&logo=unrealengine&logoColor=white&labelColor=0A0A0A" alt="Unreal Engine 5.8">
+  <img src="https://img.shields.io/badge/C++-Interface_·_Delegates-3FB950?style=for-the-badge&logo=cplusplus&logoColor=white&labelColor=0A0A0A" alt="C++">
+  <img src="https://img.shields.io/badge/Tick-None-3FB950?style=for-the-badge&labelColor=0A0A0A" alt="No Tick">
 </p>
 
 <p align="center">
   <a href="https://www.ibrahimenescolak.com"><b>Portfolio</b></a> ·
-  <a href="https://www.linkedin.com/in/ibrahim-enes-%C3%A7olak">LinkedIn</a> ·
+  <a href="https://www.linkedin.com/in/ibrahim-enes-%C3%A7olak-b18327316">LinkedIn</a> ·
   <a href="https://qpayk.itch.io">itch.io</a>
 </p>
 
@@ -167,10 +173,3 @@ Content/    Unreal assets (based on the Third Person template and its animation 
 Source/     C++ code
 ```
 
-## My other UE5 repos
-
-| Repo | What it is |
-|---|---|
-| [UE5-Boxer-Enemy-AI](https://github.com/ibrahim0enes/UE5-Boxer-Enemy-AI) | Boxer enemy that chases, punches and reacts, built in Blueprints without a Behavior Tree |
-| [UE5-Health-Damage-System](https://github.com/ibrahim0enes/UE5-Health-Damage-System) | Reusable health and damage component in C++ (interface, delegates, Blueprint hooks) |
-| [UE5-Medieval-Combat-System](https://github.com/ibrahim0enes/UE5-Medieval-Combat-System) | Player-side medieval combat: lock-on, fists and sword, directional hit reactions |
